@@ -12,16 +12,16 @@ class Solution {
             }
         }
 
-        // PriorityQueue <HashMap.Entry<Character, Integer>> pq = new PriorityQueue<>(Collections.reverseOrder());
-        // while(!pq.isEmpty()){
-            
-        // }
+        PriorityQueue <HashMap.Entry<Character, Integer>> pq = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
+        pq.addAll(map.entrySet());
+        while(!pq.isEmpty()){
+            HashMap.Entry<Character , Integer> entry = pq.poll();
+            char ch = entry.getKey();
+            int freq = entry.getValue();
 
-        ArrayList < HashMap.Entry <Character , Integer>> list = new ArrayList <>(map.entrySet());
-        Collections.sort( list,(a,b) -> b.getValue().compareTo(a.getValue()));
-        for( HashMap.Entry <Character , Integer> entry : list){
-            for (int i = 0; i < entry.getValue(); i++) {
-                sb.append(entry.getKey());
+            // Append the character 'freq' times to the StringBuilder
+            for (int i = 0; i < freq; i++) {
+                sb.append(ch);
             }
         }
 
