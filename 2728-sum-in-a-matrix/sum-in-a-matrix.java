@@ -4,14 +4,12 @@ class Solution {
             Arrays.sort(arr);
         }
         int ans=0;
-        PriorityQueue <Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         for(int i=0 ; i<nums[0].length ; i++){
+            int max=Integer.MIN_VALUE;
             for(int j=0 ; j<nums.length ; j++){
-                pq.add(nums[j][i]);
-                nums[j][i]=0;
+                max = Math.max(max , nums[j][i]);
             }
-            ans += pq.poll();
-            pq.clear();
+            ans += max;
         }
         return ans;
     }
