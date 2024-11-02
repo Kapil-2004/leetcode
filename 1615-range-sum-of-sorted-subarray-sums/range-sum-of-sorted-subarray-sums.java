@@ -1,23 +1,17 @@
 class Solution {
     public int rangeSum(int[] nums, int n, int left, int right) {
-        PriorityQueue <Integer> pq = new PriorityQueue <>();
+        ArrayList <Integer> list = new ArrayList <>();
         for(int i=0 ; i<n ; i++){
             int sum=0;
             for(int j=i ; j<n ; j++){
                 sum += nums[j];
-                pq.add(sum);
+                list.add(sum);
             }
         }
+        Collections.sort(list);
         int ans=0;
-        while(right!=0){
-            if(left<=1){
-                ans = (ans+pq.poll())%1_000_000_007;
-            }
-            else{
-                pq.poll();
-            }
-            left--;
-            right--;
+        for(int i=left-1 ; i<right ; i++){
+            ans = (ans+list.get(i))%1_000_000_007;
         }
         return ans;
     }
