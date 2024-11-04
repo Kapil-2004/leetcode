@@ -1,22 +1,36 @@
 class Solution {
     public int[] colorTheArray(int n, int[][] queries) {
-        int[] color = new int[n];
-        int[] ans = new int[queries.length];
+        int[] nums = new int[n];
+        int[] result = new int[queries.length];
         int count = 0;
 
-        for (int i = 0; i < queries.length; i++) {
-            int index = queries[i][0];
-            int newColor = queries[i][1];
-
-            if (index > 0 && color[index] == color[index - 1] && color[index] != 0) count--;
-            if (index < n - 1 && color[index] == color[index + 1] && color[index] != 0) count--;
-
-            color[index] = newColor;
-            if (index > 0 && color[index] == color[index - 1]) count++;
-            if (index < n - 1 && color[index] == color[index + 1]) count++;
-            ans[i] = count;
+        for(int i = 0; i < queries.length; i++) {
+            int idx = queries[i][0], val = queries[i][1];
+            
+            if(idx > 0) {
+                if(nums[idx-1] == 0);
+                else if(nums[idx] == nums[idx-1]) {
+                    if(nums[idx] != val && count > 0) count--;
+                }
+                else {
+                    if(val == nums[idx-1]) count++;
+                }
+            }
+			
+            if(idx+1 < n) {
+                if(nums[idx+1] == 0);
+                else if(nums[idx] == nums[idx+1]) {
+                    if(nums[idx] != val && count > 0) count--;
+                }
+                else {
+                    if(val == nums[idx+1]) count++;
+                }
+            }
+            
+            nums[idx] = val;
+            result[i] = count;
         }
 
-        return ans;
+        return result;
     }
 }
