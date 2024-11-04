@@ -1,21 +1,20 @@
 class Solution {
     public int rob(int[] nums) {
-        int n=nums.length ;
-        if(n==1) return nums[0];
-        if(n==2) return Math.max(nums[0] , nums[1]);
-        int []dp= new int [n];
-        return path(nums , dp);
-
+        int []dp = new int [nums.length+1];
+        Arrays.fill(dp,-1);
+        return path(nums,dp,0);
     }
 
-    public int path(int []nums , int []dp){
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0] , nums[1]);
-        for(int i=2 ; i<dp.length ; i++){
-            int rob = nums[i] + dp[i-2];
-            int dont = dp[i-1];
-            dp[i] = Math.max(rob , dont);
+    public int path(int []nums , int[]dp , int i){
+        if(i>=nums.length){
+            return 0;
         }
-        return dp[dp.length-1];
+        if(dp[i]!=-1){
+            return dp[i];
+        }
+        int rob = nums[i]+path(nums,dp,i+2);
+        int no = path(nums,dp,i+1);
+        dp[i]=Math.max(rob , no);
+        return dp[i];
     }
 }
