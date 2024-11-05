@@ -8,11 +8,9 @@ class Solution {
     public int path(int []nums , int []dp){
         dp[0] = nums[0];
         dp[1] = nums[1];
-        for(int i=2 ; i<dp.length ; i++){
-            int first = dp[i-2];
-            int sec = dp[i-1];
-            dp[i] = Math.min(first , sec) + nums[i];
+        for(int i=2 ; i<nums.length ; i++){
+            dp[i] = nums[i]+Math.min(dp[i-2] , dp[i-1]); 
         }
-        return Math.min(dp[dp.length-1] , dp[dp.length-2]);
+        return Math.min(dp[nums.length-1] , dp[nums.length-2]);
     }
 }
