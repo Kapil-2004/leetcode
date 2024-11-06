@@ -1,12 +1,17 @@
 class Solution {
     public String longestPalindrome(String s) {
-        String ans="";
+        if (s.length() <= 1) {
+            return s;
+        }
+
+        int len = 1;
+        String ans = s.substring(0, 1);
+
         for(int i=0 ; i<s.length() ; i++){
-            for(int j=i ; j<s.length() ; j++){
-                if(pal(s.substring(i,j+1))){
-                    if(ans.length() < j-i+1){
-                        ans=s.substring(i,j+1);
-                    }
+            for(int j=i+len ; j<=s.length() ; j++){
+                if(j - i >len && pal(s.substring(i, j))){
+                    len = j-i;
+                    ans = s.substring(i, j);
                 }
             }
         }
