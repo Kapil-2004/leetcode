@@ -3,41 +3,33 @@ class Solution {
         int m = s.length();
         int n = t.length();
         if (n > m) return "";
-
-        HashMap<Character, Integer> map1 = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            map1.put(t.charAt(i), map1.getOrDefault(t.charAt(i), 0) + 1);
+        int []map = new int [128];
+        int count=0;
+        for(int i=0 ; i<n ; i++){
+            map[t.charAt(i)]++;
+            count++;
         }
 
-        String ans = "";
-        HashMap<Character, Integer> map = new HashMap<>();
-        int i = 0, formed = 0;
-        int required = map1.size();
+        int i=0;
+        int st=0;
+        int minLen=Integer.MAX_VALUE;
 
-        for (int j = 0; j < m; j++) {
-            char ch = s.charAt(j);
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        for(int j=0 ; j<m ; j++){
+            if(map[s.charAt(j)]>0) count--;
+            map[s.charAt(j)]--;
 
-            if (map1.containsKey(ch) && map.get(ch).intValue() == map1.get(ch).intValue()) {
-                formed++;
-            }
+            while(count==0){
+                int currLen = j-i+1;
 
-            while (i <= j && formed == required) {
-                String s1 = s.substring(i, j + 1);
-                if (ans.equals("") || s1.length() < ans.length()) {
-                    ans = s1;
+                if(minLen > currLen){
+                    minLen = currLen;
+                    st = i;
                 }
-
-                char leftChar = s.charAt(i);
-                map.put(leftChar, map.get(leftChar) - 1);
-                if (map1.containsKey(leftChar) && map.get(leftChar) < map1.get(leftChar)) {
-                    formed--;
-                }
-
+                map[s.charAt(i)]++;
+                if(map[s.charAt(i)] > 0) count++;
                 i++;
             }
         }
-
-        return ans;
+        return minLen==Integer.MAX_VALUE ? "" : s.substring(st , st + minLen);
     }
 }
