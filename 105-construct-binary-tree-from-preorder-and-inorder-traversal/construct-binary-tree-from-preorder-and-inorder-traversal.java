@@ -15,25 +15,24 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return path(preorder , inorder , 0 , preorder.length-1 , 0 , inorder.length-1);
+        return create(preorder , inorder , 0 , 0 , inorder.length-1 );
     }
 
-    public TreeNode path(int []pre  , int []in , int plo , int phi , int ilo , int ihi){
-        if(plo > phi || ilo > ihi) return null;
+    public TreeNode create(int[] pre , int []in , int plo, int ilo , int ihi){
+        if(ilo > ihi) return null;
+        int idx = search(pre[plo] , ilo , ihi , in);
+        int leftsubtree = idx-ilo;
+        TreeNode root = new TreeNode(pre[plo]);
 
-        TreeNode node = new TreeNode (pre[plo]);
-        int idx = search(in , ilo , ihi , pre[plo]);
-        int c = idx - ilo;
+        root.left = create(pre , in , plo+1 , ilo , idx-1);
+        root.right= create(pre , in , plo+leftsubtree+1 , idx+1 , ihi);
 
-        node.left = path(pre , in , plo+1 , plo+c , ilo , ihi-1);
-        node.right= path(pre , in , plo+c+1 , phi , idx+1 , ihi);
-
-        return node;
+        return root;
     }
 
-    public int search (int [] in , int lo , int hi , int item){
-        for(int i=lo ; i<=hi ; i++){
-            if(in[i] == item){
+    public int search(int val , int ilo , int ihi , int []in){
+        for(int i=ilo ; i<=ihi ; i++){
+            if(in[i] == val){
                 return i;
             }
         }
