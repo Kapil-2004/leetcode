@@ -1,22 +1,16 @@
 class Solution {
     public List<String> generateParenthesis(int n) {
-        List<String> ans = new ArrayList <>();
-        StringBuilder sb = new StringBuilder();
-        path(sb , ans , 0 , 0 , n);
+        List<String> ans = new ArrayList<>();
+        path(n , ans , 0 , 0 , "");
         return ans;
     }
-    public void path( StringBuilder sb ,List<String> ans, int o, int c, int n){
-        if(o==n && c==n){
-            ans.add(sb.toString());
-            return;
+
+    public void path(int n , List<String> ans , int op , int cl , String s){
+        if(op == n && cl == n){
+            ans.add(s);
         }
-        if(o<n){
-            path( sb.append('(') , ans, o+1, c, n);
-            sb.deleteCharAt(sb.length()-1);
-        }
-        if(c<o){
-            path(sb.append(')') , ans, o, c+1, n);
-            sb.deleteCharAt(sb.length()-1);
-        }
+        if(op > n || cl > n || cl>op) return ;
+        path(n , ans , op+1 , cl , s+"(");
+        path(n , ans , op , cl+1 , s+")");
     }
 }
