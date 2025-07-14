@@ -11,8 +11,6 @@ class Solution {
 
     public void path(int []nums , List<List<Integer>>ans , List<Integer> list , int st){
         ans.add(new ArrayList<>(list));
-        if(st >= nums.length ) return ;
-
         for(int i=st ; i<nums.length ; i++){
             if (i > st && nums[i] == nums[i - 1]) continue;
             list.add(nums[i]);
